@@ -9,9 +9,9 @@ Set `NEXT_PUBLIC_SUPPORT_EMAIL` to a monitored private mailbox before public lau
 
 ## Two-account launch test
 
-1. Use an admin email and a second ordinary email. Test magic-link delivery, callback and page refresh for both. The second email must **not** be a project team member; this confirms custom SMTP is working.
-2. With the ordinary account, choose a real directory faculty member, submit an overall score plus a short note, and see the saved/pending state. Refresh and return to `/review/[facultyId]`; the earlier answers should load for editing.
-3. Before moderation, use a signed-out browser to confirm the note and aggregate count are absent from the faculty profile.
+1. Use an admin email and a second ordinary email. Test magic-link delivery, callback and page refresh for both. The second email must **not** be a project team member; this confirms custom SMTP is working for reachable external inboxes. Separately pilot Google OAuth with a VIT student-domain account before enabling its button. Do not assume custom SMTP can reach VIT inboxes that block outside senders.
+2. With the ordinary account, add faculty actually studied under to the three-review list. Confirm the least-reviewed appear first. Submit a review with overall, teaching, grading, workload, take-again and at least 80 characters, and see the saved/pending state. Confirm missing core answers are rejected. Refresh and return to `/review/[facultyId]`; the earlier answers should load for editing.
+3. Confirm progress counts one saved review toward three, including pending reviews. Before moderation, use a signed-out browser to confirm the note and aggregate count are absent from the faculty profile.
 4. Sign in as admin, open `/admin`, publish the pending review. Confirm the public profile shows “Anonymous student” and no author ID, email or registration number in its API response. Confirm its count increases but its aggregate score remains hidden below five published ratings.
 5. Edit the review using the ordinary account. Confirm the old public version disappears while the changed review is pending again. Approve it again.
 6. From the other account, report the published review. Confirm the admin queue and open-report count update. Hide it and confirm it leaves public results.

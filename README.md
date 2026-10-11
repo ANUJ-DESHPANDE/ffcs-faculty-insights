@@ -8,9 +8,10 @@ An independent, student-built faculty decision aid for VIT Vellore. Search a his
 
 - Search 450 courses and 904 faculty, with 5,643 historical offering rows.
 - Course pages show archived slots and venues with faculty filtering and sorting.
-- Faculty pages put anonymous written experiences near the top, followed by course history. Scores appear only after five published ratings; optional metric averages each need five answers.
+- Faculty pages put anonymous written experiences near the top, followed by course history. Scores appear only after five published ratings; the lab average needs five lab answers.
 - Save faculty to a browser-only shortlist and compare up to four.
-- Sign in by email, choose a faculty you studied under, give one overall rating, and optionally add a short written note or detailed teaching, grading, workload, lab ease and take-again answers. No attendance rating.
+- Sign in, choose faculty you studied under, and work toward three detailed reviews. The contribution page recommends the least-reviewed faculty from your own self-reported list.
+- Each review requires overall, teaching, grading and workload ratings, a take-again answer, and an 80–800 character written account. Lab ease is required only when the student says they had a lab. No attendance rating.
 - Reviews are privately owned, self-attested, editable, and pending until an admin approves them. Public review results omit names, emails and author IDs. Email sign-in is **not** enrollment verification.
 - Signed-in readers can report a published review. Admins can moderate and see contribution and coverage statistics.
 
@@ -31,10 +32,11 @@ Open <http://localhost:3000>. Leave the PowerShell window running while you use 
 1. Create a Supabase project. Open **SQL Editor** and run [`supabase/migrations/202610110001_reviews.sql`](supabase/migrations/202610110001_reviews.sql), then [`supabase/seed.sql`](supabase/seed.sql), in that order. The seed contains only historical faculty and course names. Keep the upstream license in the repository.
 2. In Supabase **Project Settings → API Keys**, copy the project URL and publishable key. Copy [`.env.example`](.env.example) to `.env.local` and paste those two values. Set a private support email for account deletion requests. **Never** paste a service-role or secret key into `NEXT_PUBLIC_` variables.
 3. In **Authentication → URL Configuration**, set your deployed site URL and allow `http://localhost:3000/auth/confirm**` for local testing, plus your deployed `https://.../auth/confirm**` URL.
-4. In **Authentication → Email Templates → Magic Link**, use the link `{{ .RedirectTo }}&token_hash={{ .TokenHash }}&type=email`. This app always supplies a `next` query parameter in `RedirectTo`, so the appended `&` is intentional. Send a test link and confirm it opens `/review/[facultyId]` after sign-in.
-5. Configure **custom SMTP** before public sign-ups. Supabase's default mail service only sends to project team addresses and is not suitable for launch. Test delivery to an external address.
-6. After signing in once, find your user UUID in **Authentication → Users**. In SQL Editor, grant yourself admin access: `insert into app_private.admins (user_id) values ('YOUR-USER-UUID');`. Visit `/admin` to moderate. Never give admin access through a public form.
-7. Run the [launch checks](docs/OPERATIONS.md) with two distinct test accounts before inviting students. Deploy the Next.js app with the same two environment variables and correct auth redirect URL. Keep the site private until the end-to-end flow succeeds.
+4. In **Authentication → Email Templates → Magic Link**, use the link `{{ .RedirectTo }}&token_hash={{ .TokenHash }}&type=email`. This app always supplies a `next` query parameter in `RedirectTo`, so the appended `&` is intentional. Test with an inbox that accepts outside mail; VIT student inboxes may reject these messages.
+5. Configure **custom SMTP** before public email-link sign-ups. Supabase's default mail service only sends to project team addresses. A custom sender cannot override a VIT inbox policy that blocks outside mail.
+6. For a VIT Google sign-in pilot, follow [Auth options and VTOP verification](docs/AUTH_AND_VERIFICATION.md). Configure the Google provider in Supabase and Google Cloud, test a real `@vitstudent.ac.in` account, then set `NEXT_PUBLIC_VIT_GOOGLE_SIGN_IN=true`. This path does not send an OTP email. It remains disabled until tested.
+7. After signing in once, find your user UUID in **Authentication → Users**. In SQL Editor, grant yourself admin access: `insert into app_private.admins (user_id) values ('YOUR-USER-UUID');`. Visit `/admin` to moderate. Never give admin access through a public form.
+8. Run the [launch checks](docs/OPERATIONS.md) with two distinct test accounts before inviting students. Deploy the Next.js app with the same environment variables and correct auth redirect URL. Keep the site private until the end-to-end flow succeeds.
 
 More detail, including moderation and backups: [Operations guide](docs/OPERATIONS.md).
 
@@ -56,4 +58,4 @@ The public catalog was normalized from [CodeChef-VIT's FFCS-inator](https://gith
 
 No fictional ratings are shown alongside real faculty. Reviews are subjective and self-attested. VTOP passwords, session cookies and registration numbers are not collected. External Reddit links are manually curated and never counted as authenticated reviews. Grade curves are not displayed without class-specific evidence.
 
-See [database design](DATABASE_DESIGN.md), [project context](PROJECT_CONTEXT.md), [operations](docs/OPERATIONS.md), and [source investigations](docs/SOURCE_INVESTIGATIONS.md).
+See [database design](DATABASE_DESIGN.md), [project context](PROJECT_CONTEXT.md), [operations](docs/OPERATIONS.md), [auth and VTOP verification](docs/AUTH_AND_VERIFICATION.md), and [source investigations](docs/SOURCE_INVESTIGATIONS.md).

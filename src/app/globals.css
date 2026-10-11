@@ -1084,9 +1084,12 @@ footer > div:last-child {
   }
 }
 
-/* Reviews: one clear action, with richer context available when wanted. */
+/* Reviews: required core detail, with the lab question shown only when relevant. */
 .review-form { display: grid; gap: 18px; max-width: 760px; }
 .review-form .panel { margin: 0; }
+.review-form fieldset { border: 0; border-top: 1px solid var(--line); padding: 16px 0 0; margin: 16px 0 0; }
+.review-form legend { font-weight: 800; font-size: 14px; }
+.review-form .lab-question { margin-top: 20px; }
 .review-form textarea, .review-form select, .faculty-picker input, .auth-panel input {
   width: 100%; border: 1px solid var(--line); border-radius: 7px; padding: 12px;
   background: #fff; color: var(--ink); font: inherit;
@@ -1100,11 +1103,6 @@ footer > div:last-child {
 .prompt-chips button { border: 1px solid var(--line); background: #f4f8f6; border-radius: 100px; padding: 7px 11px; color: var(--accent); font-size: 12px; }
 .prompt-chips button:hover, .prompt-chips button:focus-visible { border-color: var(--accent); }
 .review-form textarea { display: block; margin: 8px 0; resize: vertical; }
-.optional-ratings summary { display: flex; justify-content: space-between; gap: 12px; cursor: pointer; }
-.optional-ratings summary span { color: var(--muted); font-size: 12px; }
-.optional-ratings fieldset { border: 0; border-top: 1px solid var(--line); margin: 18px 0 0; padding: 16px 0 0; }
-.optional-ratings legend { font-weight: 700; }
-.optional-ratings legend small { color: var(--muted); font-weight: 400; }
 .attestation { display: flex; gap: 9px; align-items: start; font-weight: 700; }
 .attestation input { margin-top: 5px; }
 .form-error { color: #a92323; font-weight: 700; }
@@ -1114,13 +1112,30 @@ footer > div:last-child {
 .faculty-picker { max-width: 760px; }
 .faculty-picker > label { display: block; font-size: 18px; font-weight: 800; margin-bottom: 10px; }
 .picker-results { display: grid; margin-top: 15px; border-top: 1px solid var(--line); }
-.picker-results a { display: flex; justify-content: space-between; gap: 12px; padding: 12px 4px; border-bottom: 1px solid var(--line); }
+.picker-results > div { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 12px 4px; border-bottom: 1px solid var(--line); }
 .picker-results b { color: var(--accent); white-space: nowrap; }
 .picker-results small { display: block; color: var(--muted); margin-top: 3px; }
+.picker-results button { border: 1px solid var(--accent); background: white; color: var(--accent); border-radius: 5px; padding: 7px 12px; }
+.picker-results button:disabled { border-color: var(--line); color: var(--muted); }
+.mission-layout { display: grid; grid-template-columns: 1.1fr 1fr; align-items: start; gap: 18px; }
+.mission-progress { display: grid; gap: 5px; margin: 15px 0; }
+.mission-progress strong { font-size: 31px; }
+.mission-progress progress { width: 100%; height: 9px; accent-color: var(--accent); }
+.mission-candidates { border-top: 1px solid var(--line); }
+.mission-candidates > div, .studied-list > div { display: flex; justify-content: space-between; gap: 10px; border-bottom: 1px solid var(--line); padding: 10px 0; }
+.mission-candidates small { display: block; color: var(--muted); margin-top: 3px; }
+.mission-candidates a { color: var(--accent); font-weight: 800; white-space: nowrap; }
+.mission-done { padding: 12px; background: #edf4ef; border-radius: 5px; }
+.studied-list { margin-top: 24px; font-size: 13px; }
+.studied-list > b { display: block; margin-bottom: 8px; }
+.studied-list small { color: var(--accent); }
+.studied-list button { border: 0; background: transparent; color: var(--muted); }
 .contribute-notes { display: grid; grid-template-columns: 1.5fr 1fr; gap: 18px; margin-top: 20px; }
 .auth-panel { max-width: 540px; }
 .auth-panel form { display: grid; gap: 14px; }
 .auth-panel label { display: grid; gap: 8px; font-weight: 700; }
+.vit-google-option { margin-bottom: 20px; padding-bottom: 14px; border-bottom: 1px solid var(--line); }
+.vit-google-option p { margin: 10px 0 0; font-size: 12px; }
 .profile-overview { display: flex; justify-content: space-between; align-items: center; gap: 24px; margin-bottom: 16px; }
 .profile-overview .primary-link { flex: none; }
 .quick-metrics { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 18px; }
@@ -1158,7 +1173,7 @@ footer > div:last-child {
 .verification-preview textarea { display: block; width: 100%; border: 1px solid var(--line); border-radius: 5px; padding: 12px; font: inherit; }
 .verification-preview button { border: 1px solid var(--line); border-radius: 5px; background: white; padding: 8px 12px; margin: 12px 0; }
 @media (max-width: 700px) {
-  .contribute-notes, .quick-metrics { grid-template-columns: 1fr 1fr; }
+  .contribute-notes, .quick-metrics, .mission-layout { grid-template-columns: 1fr; }
   .profile-overview { align-items: start; flex-direction: column; }
   .scale { gap: 8px; }
   .scale .rating-options { order: 2; width: 100%; }

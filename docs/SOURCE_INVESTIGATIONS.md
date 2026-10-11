@@ -8,6 +8,8 @@ The implemented `/verification-lab` is a browser-only research preview. A studen
 
 A production verification flow needs informed student testing of actual VTOP pages or exports, a determination of what can be accessed within the student's own authenticated browser session, institutional/legal review where applicable, a preview of exactly which facts leave the device, retention limits, and a way to resolve faculty identity across semesters. It must never ask for or transmit VTOP passwords, cookies or tokens. A VIT email address alone remains unverified.
 
+The current three-review mission uses manual selection of faculty a student says they studied under, then ranks those by published review coverage. See [auth and verification options](AUTH_AND_VERIFICATION.md) for the VIT Google pilot and the difference between account control and enrollment proof.
+
 ## Reddit external discussions
 
 Reddit's [Developer Terms](https://redditinc.com/policies/developer-terms), [Data API Terms](https://redditinc.com/policies/data-api-terms) and [developer access guide](https://support.reddithelp.com/hc/en-us/articles/14945211791892-Developer-Platform-Accessing-Reddit-Data) describe approval, terms, rate limits and restrictions on API use, storage and commercial use. We have not obtained API approval or a data-use agreement. No crawler, sentiment extraction or imported Reddit review data is implemented.

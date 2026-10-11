@@ -8,10 +8,11 @@ An independent, student-built decision aid for VIT Vellore FFCS. It turns scatte
 
 - Next.js App Router, React, TypeScript and plain CSS. `npm run dev` works without cloud credentials for browsing.
 - Search 450 courses, 904 faculty and 5,643 historical offerings from FFCS-inator. Course/faculty pages, slot filtering and sorting, browser-local shortlist, comparison of four.
-- Supabase SSR email-link sign-in, a faculty review form, private one-review-per-author-and-faculty storage, optional course and optional detail ratings, editable review, moderation queue, anonymous public reads, reports, admin statistics and manual Reddit discussion links are implemented in code and an explicit SQL migration.
-- Written experiences appear high on faculty pages. Overall is the only required rating. Writing prompts are optional and focus on teaching, grading, workload, labs and a practical bottom line. Attendance has been removed. Lab ease is optional.
+- Supabase SSR email-link sign-in, an opt-in VIT Google sign-in pilot, a faculty review form, private one-review-per-author-and-faculty storage, editable reviews, moderation queue, anonymous public reads, reports, admin statistics and manual Reddit discussion links are implemented in code and an explicit SQL migration.
+- Written experiences appear high on faculty pages. Each review requires overall, teaching, grading and workload ratings, a take-again answer, and an 80–800 character written account. Writing cues ask for reasoning and a bottom line. Lab ease appears when the student reports lab experience. Attendance has been removed.
+- The contribution page has a three-review goal and sorts a student's self-reported studied-faculty list by published review coverage. The list stays in browser session storage; VTOP has not supplied it.
 - No fictional reviews are displayed in the production browsing flow. Aggregate ratings require five published answers; low counts are shown without an average.
-- Authenticated email accounts are privately associated with reviews. Public responses omit the author ID and email. Account login and self-attestation do **not** verify enrollment.
+- Authenticated accounts are privately associated with reviews. Public responses omit the author ID and email. Account login and self-attestation do **not** verify enrollment. VIT Google sign-in is code-complete but disabled until an actual VIT Workspace account can test it; even success would verify account control, not class enrollment.
 - The Supabase migration and seed have **not yet been applied to a hosted project**. The user answered that no Supabase project exists. Live persistence, mail delivery and deployment are not yet verified.
 
 ## Provenance and current availability
@@ -33,7 +34,7 @@ The imported source is CodeChef-VIT's [FFCS-inator](https://github.com/CodeChefV
 
 ## Next operational steps
 
-1. Create Supabase, apply the migration and seed, configure publishable URL/key, auth redirect and custom SMTP.
+1. Create Supabase, apply the migration and seed, configure publishable URL/key and auth redirect. Set up custom SMTP for reachable non-VIT email inboxes; pilot VIT Google sign-in separately because the user reports VIT student mail blocks outside OTP messages.
 2. Test two-account sign-in, submission, author edit, moderation, anonymous public display and reporting end to end before launching.
 3. Deploy with the same environment variables, configure backups and a moderation owner, and invite a small pilot group.
 4. Obtain a confirmed upcoming-cycle allocation source before displaying current availability.

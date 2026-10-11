@@ -84,8 +84,8 @@ export default function Home() {
           <span className="eyebrow">SHARE YOUR EXPERIENCE</span>
           <h2>Help someone make a better choice.</h2>
           <p>
-            Studied under a faculty member here? Give a quick overall rating and,
-            if you like, a sentence about teaching, grading, workload or labs.
+            Studied under a faculty member here? Choose three you know, starting
+            with those who have fewer reviews. Share a short, detailed account of each.
           </p>
           <Link className="primary-link" href="/contribute">
             Write a review ↗
@@ -95,8 +95,8 @@ export default function Home() {
           <span>YOUR EXPERIENCE · ANONYMOUS TO READERS</span>
           <h3>What should the next student know?</h3>
           <div>
-            <b>Quick rating</b>
-            <b>Optional note</b>
+            <b>Core ratings</b>
+            <b>Written bottom line</b>
           </div>
           <p>Your review is saved privately and published after moderation.</p>
         </div>

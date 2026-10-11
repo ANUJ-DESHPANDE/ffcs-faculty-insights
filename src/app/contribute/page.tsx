@@ -1,4 +1,22 @@
 import { FacultyPicker } from '@/components/faculty-picker';
+
 export default function Contribute() {
-  return <main className="page-wrap"><div className="page-intro"><span className="eyebrow">PASS IT FORWARD</span><h1>Help the next student choose.</h1><p>Pick a faculty member you studied under. A quick rating and, if you like, a short note are enough.</p></div><FacultyPicker /><div className="contribute-notes"><section className="panel"><h2>What happens next?</h2><ol className="steps"><li><b>Pick someone you studied under.</b><span>The course is optional; archived offerings are not an eligibility list.</span></li><li><b>Give the quick take.</b><span>Overall rating is required. The written note and detailed ratings are optional.</span></li><li><b>Submit privately.</b><span>Moderators check it first. Readers see “Anonymous student,” never your email.</span></li></ol></section><section className="panel"><h2>Honest community knowledge</h2><p className="muted">You can edit your own review later. Email sign-in and self-attestation do not verify that you were enrolled in a class.</p></section></div></main>;
+  return <main className="page-wrap">
+    <div className="page-intro">
+      <span className="eyebrow">PASS IT FORWARD</span>
+      <h1>Three reviews. More faculty covered.</h1>
+      <p>Choose faculty you studied under, then share three useful experiences. We suggest the least-reviewed from your own list first.</p>
+    </div>
+    <FacultyPicker />
+    <div className="contribute-notes">
+      <section className="panel">
+        <h2>What you’ll write</h2>
+        <p>For each faculty: overall, teaching, grading and workload ratings, whether you would take them again, and two or three specific sentences with your bottom line. Lab ease appears only if you had a lab.</p>
+      </section>
+      <section className="panel">
+        <h2>How we protect trust</h2>
+        <p className="muted">Your public review is anonymous and moderated. For now, your studied list is self-reported. Email or Google sign-in alone cannot prove you took a class with a faculty member.</p>
+      </section>
+    </div>
+  </main>;
 }

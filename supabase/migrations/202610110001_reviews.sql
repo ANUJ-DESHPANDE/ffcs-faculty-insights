@@ -28,12 +28,12 @@ create table if not exists app_private.reviews (
   faculty_id text not null references public.faculty_directory(id),
   course_code text references public.course_directory(code),
   overall smallint not null check (overall between 1 and 5),
-  teaching smallint check (teaching between 1 and 5),
-  grading smallint check (grading between 1 and 5),
-  workload smallint check (workload between 1 and 5),
+  teaching smallint not null check (teaching between 1 and 5),
+  grading smallint not null check (grading between 1 and 5),
+  workload smallint not null check (workload between 1 and 5),
   lab_ease smallint check (lab_ease between 1 and 5),
-  would_take_again boolean,
-  comment text check (comment is null or char_length(comment) between 20 and 800),
+  would_take_again boolean not null,
+  comment text not null check (char_length(comment) between 80 and 800),
   -- Self-attestation is not enrollment verification.
   studied_under_faculty boolean not null check (studied_under_faculty),
   status text not null default 'pending' check (status in ('pending', 'published', 'hidden')),
@@ -87,11 +87,11 @@ revoke all on function app_private.is_admin() from public, anon, authenticated;
 -- The authenticated caller can create or replace only their own faculty review.
 -- All new/edited reviews wait for moderation before public display or aggregation.
 create or replace function public.save_review(
-  p_faculty_id text, p_overall smallint, p_teaching smallint default null,
-  p_grading smallint default null, p_workload smallint default null,
-  p_lab_ease smallint default null, p_would_take_again boolean default null,
-  p_course_code text default null, p_comment text default null,
-  p_studied_under_faculty boolean default false
+  p_faculty_id text, p_overall smallint, p_teaching smallint,
+  p_grading smallint, p_workload smallint,
+  p_lab_ease smallint, p_would_take_again boolean,
+  p_course_code text, p_comment text,
+  p_studied_under_faculty boolean
 ) returns uuid language plpgsql security definer set search_path = '' as $$
 declare
   v_user uuid := (select auth.uid());
@@ -100,16 +100,21 @@ declare
   v_course text := nullif(btrim(p_course_code), '');
 begin
   if v_user is null then raise exception 'Sign in before reviewing.' using errcode = '28000'; end if;
-  if not p_studied_under_faculty then raise exception 'Only review faculty you studied under.' using errcode = '22023'; end if;
-  if p_overall is null or p_overall not between 1 and 5 or
-     (p_teaching is not null and p_teaching not between 1 and 5) or
-     (p_grading is not null and p_grading not between 1 and 5) or
-     (p_workload is not null and p_workload not between 1 and 5) or
-     (p_lab_ease is not null and p_lab_ease not between 1 and 5) then
-    raise exception 'Ratings must be between 1 and 5.' using errcode = '22023';
+  if p_studied_under_faculty is distinct from true then
+    raise exception 'Only review faculty you studied under.' using errcode = '22023';
   end if;
-  if v_comment is not null and char_length(v_comment) not between 20 and 800 then
-    raise exception 'Written reviews must be 20 to 800 characters.' using errcode = '22023';
+  if p_overall is null or p_overall not between 1 and 5 or
+     p_teaching is null or p_teaching not between 1 and 5 or
+     p_grading is null or p_grading not between 1 and 5 or
+     p_workload is null or p_workload not between 1 and 5 or
+     (p_lab_ease is not null and p_lab_ease not between 1 and 5) then
+    raise exception 'Overall, teaching, grading and workload must be rated from 1 to 5.' using errcode = '22023';
+  end if;
+  if p_would_take_again is null then
+    raise exception 'Answer whether you would take this faculty again.' using errcode = '22023';
+  end if;
+  if v_comment is null or char_length(v_comment) not between 80 and 800 then
+    raise exception 'Written reviews must be 80 to 800 characters.' using errcode = '22023';
   end if;
   if not exists (select 1 from public.faculty_directory where id = p_faculty_id) then
     raise exception 'Faculty not found.' using errcode = '22023';
@@ -150,6 +155,16 @@ language sql stable security definer set search_path = '' as $$
 $$;
 revoke all on function public.my_review(text) from public, anon;
 grant execute on function public.my_review(text) to authenticated;
+
+create or replace function public.my_contributions()
+returns table (faculty_id text, status text)
+language sql stable security definer set search_path = '' as $$
+  select r.faculty_id, r.status from app_private.reviews r
+  where r.author_id = (select auth.uid()) and r.status in ('pending', 'published')
+  order by r.created_at;
+$$;
+revoke all on function public.my_contributions() from public, anon;
+grant execute on function public.my_contributions() to authenticated;
 
 create or replace function public.delete_my_review(p_faculty_id text)
 returns void language plpgsql security definer set search_path = '' as $$
