@@ -4,12 +4,13 @@ import { useEffect, useState } from "react";
 import {
   facultyById,
   offeringsForFaculty,
-  reputation,
   scoreLabel,
 } from "@/lib/catalog";
+import { useReputations } from './reputation-provider';
 import { getShortlist } from "./shortlist-button";
 
 export function CompareView() {
+  const reputation = useReputations();
   const [saved, setSaved] = useState<string[]>([]);
   const [selected, setSelected] = useState<string[]>([]);
   useEffect(() => {
@@ -38,11 +39,8 @@ export function CompareView() {
       "Grading generosity ↑",
       (id: string) => scoreLabel(reputation(id).grading),
     ],
-    [
-      "Attendance strictness ↑",
-      (id: string) => scoreLabel(reputation(id).attendance),
-    ],
     ["Workload ↑", (id: string) => scoreLabel(reputation(id).workload)],
+    ["Lab ease ↑", (id: string) => scoreLabel(reputation(id).labEase)],
     [
       "Would take again",
       (id: string) =>
@@ -108,7 +106,7 @@ export function CompareView() {
                   <div className="compare-cell heading" key={item.id}>
                     <Link href={`/faculty/${item.id}`}>{item.name} ↗</Link>
                     <small>
-                      {item.demo ? "Simulated data" : "Public archive only"}
+                      Historical course archive
                     </small>
                   </div>
                 ))}

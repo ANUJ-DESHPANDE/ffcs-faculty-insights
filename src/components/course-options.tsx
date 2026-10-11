@@ -1,9 +1,11 @@
 "use client";
 import { useMemo, useState } from "react";
-import { facultyById, reputation, type Offering } from "@/lib/catalog";
+import { facultyById, type Offering } from "@/lib/catalog";
+import { useReputations } from './reputation-provider';
 import { FacultyCard } from "./faculty-card";
 
 export function CourseOptions({ rows }: { rows: Offering[] }) {
+  const reputation = useReputations();
   const [slot, setSlot] = useState("all");
   const [sort, setSort] = useState("name");
   const slots = useMemo(
@@ -28,7 +30,7 @@ export function CourseOptions({ rows }: { rows: Offering[] }) {
             facultyById.get(b.facultyId)?.name || "",
           );
         }),
-    [rows, slot, sort],
+    [rows, slot, sort, reputation],
   );
   return (
     <section className="options-section">

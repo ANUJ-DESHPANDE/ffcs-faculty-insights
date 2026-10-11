@@ -35,23 +35,20 @@ export default async function CoursePage({
       <section className="detail-hero">
         <div>
           <span className="eyebrow">
-            {course.demo
-              ? "FICTIONAL PRODUCT DEMO"
-              : `${course.type.toUpperCase()} · HISTORICAL ARCHIVE`}
+            {course.type.toUpperCase()} · HISTORICAL ARCHIVE
           </span>
           <h1>{course.title}</h1>
           <p>
             <code>{course.code}</code> · {rows.length}{" "}
-            {course.demo ? "simulated options" : "archived offering rows"}
+            archived offering rows
           </p>
         </div>
       </section>
       <div className="context-note">
-        <strong>{course.demo ? "Demo data" : "Historical source data"}</strong>
+        <strong>Historical source data</strong>
         <p>
-          {course.demo
-            ? "All faculty, slots and ratings on this page are fictional examples for exploring the interface."
-            : "These offerings came from a June 2026 FFCS-inator snapshot. They do not confirm availability in the upcoming FFCS cycle."}
+          These offerings came from a June 2026 FFCS-inator snapshot. They do
+          not confirm availability in the upcoming FFCS cycle.
         </p>
       </div>
       <CourseOptions rows={rows} />

@@ -2,6 +2,8 @@
 const test = require("node:test");
 const assert = require("node:assert/strict");
 const snapshot = require("../src/data/ffcs-snapshot.json");
+const fs = require('node:fs');
+const path = require('node:path');
 
 test("imported rows have valid references and distinct IDs", () => {
   const codes = new Set(snapshot.courses.map((row) => row.code));
@@ -39,4 +41,12 @@ test("representative real course and faculty searches have matches", () => {
       compact(item.name).includes(compact("nalini")),
     ),
   );
+});
+
+test('review directory seed contains every historical faculty and course, without demo records', () => {
+  const seed = fs.readFileSync(path.join(__dirname, '../supabase/seed.sql'), 'utf8');
+  assert.equal((seed.match(/insert into public\.faculty_directory/g) ?? []).length, snapshot.faculty.length);
+  assert.equal((seed.match(/insert into public\.course_directory/g) ?? []).length, snapshot.courses.length);
+  assert.ok(seed.includes(snapshot.provenance.commit));
+  assert.ok(!seed.includes('DEMO302L'));
 });

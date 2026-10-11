@@ -9,11 +9,12 @@ import {
   offerings,
   offeringsForCourse,
   offeringsForFaculty,
-  reputation,
 } from "@/lib/catalog";
+import { useReputations } from './reputation-provider';
 import { ShortlistButton } from "./shortlist-button";
 
 export function Browse({ kind }: { kind: "courses" | "faculty" }) {
+  const reputation = useReputations();
   const params = useSearchParams();
   const [query, setQuery] = useState(params.get("q") || "");
   const [school, setSchool] = useState("all");
@@ -120,13 +121,13 @@ export function Browse({ kind }: { kind: "courses" | "faculty" }) {
                     key={item.code}
                   >
                     <span className="eyebrow">
-                      {item.demo ? "PRODUCT DEMO" : item.type}
+                      {item.type}
                     </span>
                     <h2>{item.title}</h2>
                     <div>
                       <code>{item.code}</code>
                       <span>
-                        {count} {item.demo ? "simulated" : "archived"} options
+                        {count} archived options
                         ↗
                       </span>
                     </div>
@@ -139,9 +140,7 @@ export function Browse({ kind }: { kind: "courses" | "faculty" }) {
                 return (
                   <div className="browse-tile" key={item.id}>
                     <span className="eyebrow">
-                      {item.demo
-                        ? "PRODUCT DEMO"
-                        : `${offeringsForFaculty(item.id).length} KNOWN OFFERINGS`}
+                      {offeringsForFaculty(item.id).length} KNOWN OFFERINGS
                     </span>
                     <h2>
                       <Link href={`/faculty/${item.id}`}>{item.name}</Link>
@@ -149,8 +148,8 @@ export function Browse({ kind }: { kind: "courses" | "faculty" }) {
                     <div>
                       <span>
                         {rep.count
-                          ? `${rep.count} simulated ratings`
-                          : "Ratings not collected yet"}
+                          ? `${rep.count} published ratings`
+                          : "No published ratings yet"}
                       </span>
                       <ShortlistButton id={item.id} compact />
                     </div>

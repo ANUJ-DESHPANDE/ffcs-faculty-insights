@@ -2,47 +2,41 @@
 
 ## Purpose
 
-An independent, student-built decision aid for VIT Vellore FFCS. It aims to turn informal faculty knowledge into structured, searchable information while making uncertainty and source age visible. It complements timetable planners such as FFCS-inator: students use this project to judge faculty options, then build a timetable elsewhere.
+An independent, student-built decision aid for VIT Vellore FFCS. It turns scattered faculty knowledge into searchable, contextual, privacy-conscious information while making uncertainty and source age visible. Students judge options here and can build a timetable with a dedicated planner.
 
-## Implemented now (October 2026)
+## Implemented in the repository (11 October 2026)
 
-- Next.js App Router, React, TypeScript and plain CSS. No cloud service required for `npm run dev`.
-- Search and browse 450 courses and 904 faculty from a public FFCS-inator snapshot, with 5,643 offering rows including slots, venues, schools and categories.
-- Course and faculty detail routes, slot filtering, sorting, localStorage shortlist, and side-by-side comparison of up to four saved faculty.
-- Separate fictional demo course (`DEMO302L`) and fictional faculty with simulated ratings for exploring the interface. These records are explicitly labeled; no invented opinions are attached to real people.
-- Sample-aware reputation presentation: one or two ratings show insufficient data, three or four show early data, and aggregate scores appear at five or more. Real faculty currently have no ratings.
-- Static About and contribution pages. The contribution page explains the planned flow but does not accept or store reviews.
-- Importer `scripts/import-ffcs-inator.cjs` normalizes a local checkout of FFCS-inator into `src/data/ffcs-snapshot.json`.
+- Next.js App Router, React, TypeScript and plain CSS. `npm run dev` works without cloud credentials for browsing.
+- Search 450 courses, 904 faculty and 5,643 historical offerings from FFCS-inator. Course/faculty pages, slot filtering and sorting, browser-local shortlist, comparison of four.
+- Supabase SSR email-link sign-in, a faculty review form, private one-review-per-author-and-faculty storage, optional course and optional detail ratings, editable review, moderation queue, anonymous public reads, reports, admin statistics and manual Reddit discussion links are implemented in code and an explicit SQL migration.
+- Written experiences appear high on faculty pages. Overall is the only required rating. Writing prompts are optional and focus on teaching, grading, workload, labs and a practical bottom line. Attendance has been removed. Lab ease is optional.
+- No fictional reviews are displayed in the production browsing flow. Aggregate ratings require five published answers; low counts are shown without an average.
+- Authenticated email accounts are privately associated with reviews. Public responses omit the author ID and email. Account login and self-attestation do **not** verify enrollment.
+- The Supabase migration and seed have **not yet been applied to a hosted project**. The user answered that no Supabase project exists. Live persistence, mail delivery and deployment are not yet verified.
 
-## Data provenance and current availability
+## Provenance and current availability
 
-The imported source is CodeChef-VIT's [FFCS-inator](https://github.com/CodeChefVIT/ffcs), `prod` branch, commit `f8bb2fc` dated 2026-06-28. The snapshot JSON records the full commit, import time and source URL. It is historical; no upcoming FFCS availability is confirmed. Do not switch any offering to “current” without a dated, verified cycle snapshot. See `docs/third-party/FFCS-INATOR-LICENSE.txt` for the upstream MIT license.
+The imported source is CodeChef-VIT's [FFCS-inator](https://github.com/CodeChefVIT/ffcs), `prod` commit `f8bb2fc345763d91a3cdb0ca92928191eb381309` dated 2026-06-28. The JSON records the full provenance. It is historical. No upcoming-cycle availability is confirmed. Preserve the [upstream MIT license](docs/third-party/FFCS-INATOR-LICENSE.txt). Never switch an offering to “current” without a new verified dated source.
 
-## Current architecture
+## Architecture and trust
 
-`src/lib/catalog.ts` is the typed application data boundary. Pages and components use its domain records and query helpers; external TypeScript source shapes are kept inside the importer. The product currently reads a static JSON snapshot and a small, clearly fictional demo dataset. This is deliberately simple for a read-heavy prototype. The next persistence adapter can load the same domain shape from PostgreSQL/Supabase without making UI components understand the upstream source layout.
+`src/lib/catalog.ts` wraps the local historical directory and offering snapshot. Supabase Auth and PostgreSQL hold accounts and reviews when configured; the SQL migration is in `supabase/migrations`. The private schema holds author IDs, review statuses, reports, admin membership and curated links. Public security-definer functions expose only approved anonymous data. Admin checks live in SQL, not merely in UI. The review route enforces valid form input before calling the database function; the database validates it again.
 
-## Current product decisions
+## Product decisions
 
-- Faculty reputation belongs primarily to faculty; course context on a review is optional.
-- Offerings are dated snapshots linking course, faculty, cycle, slot and venue. Historical associations never imply current availability.
-- Grade curves are tied to specific class offerings, separate from subjective reviews. No curve is displayed without evidence.
-- Public reviews will always be anonymous. Private account ownership will be needed for edits and abuse control.
-- A future reciprocal access model should ask students to review a few faculty they actually studied under, prioritizing scarce coverage, before unlocking detailed community data.
-- The site will never request VTOP passwords. Any future browser-assisted import should process locally, preview normalized facts and require consent.
+- Reviews primarily belong to faculty, with optional course context and no requirement for a current FFCS offering.
+- Self-attested and email-authenticated are honest labels; never call them enrollment-verified.
+- Grade curves need evidence tied to an actual class offering and are not inferred from subjective ratings.
+- Public reviews need moderation and reports because they discuss identifiable people.
+- Reddit references remain separate link-only material. They do not create reviews or scores.
+- VTOP credentials or session tokens are never collected. The official public portal description confirms course registration and timetables exist, but the authenticated page structure and legal/technical basis for a verification import are unconfirmed. See `docs/SOURCE_INVESTIGATIONS.md`.
 
-## Postponed
+## Next operational steps
 
-Real review submission, VIT student authentication, enrollment verification, grade-curve collection, verified-only aggregates, current-cycle import, server persistence, review moderation, and a reciprocal access gate. CAT averages and lab-specific questions also remain research topics. No fake verification is implemented.
+1. Create Supabase, apply the migration and seed, configure publishable URL/key, auth redirect and custom SMTP.
+2. Test two-account sign-in, submission, author edit, moderation, anonymous public display and reporting end to end before launching.
+3. Deploy with the same environment variables, configure backups and a moderation owner, and invite a small pilot group.
+4. Obtain a confirmed upcoming-cycle allocation source before displaying current availability.
+5. Explore a consent-based VTOP verification design with genuine account access/institutional review. Do not display a verified badge until actual enrollment evidence can be checked.
 
-## Superseded assumptions
-
-The original scaffold described reviews as mandatory faculty + course ratings. The updated product brief changed that: reviews are faculty-level with optional course context. The old `DATABASE_DESIGN.md` was only a proposal; no database schema or migration had been created.
-
-## Next steps before FFCS
-
-1. Obtain and verify a dated upcoming allocation snapshot; add it as a new cycle and clearly mark its coverage.
-2. Set up Supabase/PostgreSQL and implement anonymous public reads with protected review writes.
-3. Design VIT student sign-in, review ownership, editing and moderation without collecting VTOP credentials.
-4. Pilot the review questions with actual students; validate directions and add lab signals only where useful.
-5. Collect real reviews and course-specific grading evidence with provenance before enabling live reputation rankings.
+See `DATABASE_DESIGN.md` for the implemented schema, `README.md` for beginner setup, and `docs/OPERATIONS.md` for launch steps.

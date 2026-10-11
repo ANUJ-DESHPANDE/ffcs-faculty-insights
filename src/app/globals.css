@@ -101,6 +101,7 @@ p {
   border: 1px solid var(--line);
   border-radius: 8px;
 }
+.nav-button { border: 0; background: transparent; font-size: 13px; font-weight: 700; }
 .demo-strip {
   background: #eaf0dc;
   color: #4d5b30;
@@ -1082,3 +1083,84 @@ footer > div:last-child {
     padding: 33px 22px;
   }
 }
+
+/* Reviews: one clear action, with richer context available when wanted. */
+.review-form { display: grid; gap: 18px; max-width: 760px; }
+.review-form .panel { margin: 0; }
+.review-form textarea, .review-form select, .faculty-picker input, .auth-panel input {
+  width: 100%; border: 1px solid var(--line); border-radius: 7px; padding: 12px;
+  background: #fff; color: var(--ink); font: inherit;
+}
+.field-label { display: block; margin-top: 22px; font-weight: 700; }
+.field-label small { color: var(--muted); font-weight: 400; }
+.field-label select { display: block; margin-top: 8px; }
+.scale { display: flex; align-items: center; gap: 15px; flex-wrap: wrap; margin: 12px 0; }
+.scale small { color: var(--muted); }
+.prompt-chips { display: flex; flex-wrap: wrap; gap: 7px; margin: 14px 0; }
+.prompt-chips button { border: 1px solid var(--line); background: #f4f8f6; border-radius: 100px; padding: 7px 11px; color: var(--accent); font-size: 12px; }
+.prompt-chips button:hover, .prompt-chips button:focus-visible { border-color: var(--accent); }
+.review-form textarea { display: block; margin: 8px 0; resize: vertical; }
+.optional-ratings summary { display: flex; justify-content: space-between; gap: 12px; cursor: pointer; }
+.optional-ratings summary span { color: var(--muted); font-size: 12px; }
+.optional-ratings fieldset { border: 0; border-top: 1px solid var(--line); margin: 18px 0 0; padding: 16px 0 0; }
+.optional-ratings legend { font-weight: 700; }
+.optional-ratings legend small { color: var(--muted); font-weight: 400; }
+.attestation { display: flex; gap: 9px; align-items: start; font-weight: 700; }
+.attestation input { margin-top: 5px; }
+.form-error { color: #a92323; font-weight: 700; }
+.review-form button:disabled { cursor: wait; opacity: .65; }
+.review-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 16px; }
+.review-actions .text-link { border: 0; background: none; color: #a92323; }
+.faculty-picker { max-width: 760px; }
+.faculty-picker > label { display: block; font-size: 18px; font-weight: 800; margin-bottom: 10px; }
+.picker-results { display: grid; margin-top: 15px; border-top: 1px solid var(--line); }
+.picker-results a { display: flex; justify-content: space-between; gap: 12px; padding: 12px 4px; border-bottom: 1px solid var(--line); }
+.picker-results b { color: var(--accent); white-space: nowrap; }
+.picker-results small { display: block; color: var(--muted); margin-top: 3px; }
+.contribute-notes { display: grid; grid-template-columns: 1.5fr 1fr; gap: 18px; margin-top: 20px; }
+.auth-panel { max-width: 540px; }
+.auth-panel form { display: grid; gap: 14px; }
+.auth-panel label { display: grid; gap: 8px; font-weight: 700; }
+.profile-overview { display: flex; justify-content: space-between; align-items: center; gap: 24px; margin-bottom: 16px; }
+.profile-overview .primary-link { flex: none; }
+.quick-metrics { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 18px; }
+.quick-metrics .panel { display: grid; gap: 6px; padding: 17px; }
+.quick-metrics strong { font-size: 26px; }
+.quick-metrics small { color: var(--muted); }
+.experiences { margin-bottom: 20px; }
+.experiences .section-heading { align-items: end; }
+.experience { border-top: 1px solid var(--line); padding: 21px 0; }
+.experience p { white-space: pre-wrap; font-size: 16px; margin: 10px 0 14px; }
+.experience-meta, .experience-bottom { display: flex; justify-content: space-between; gap: 12px; align-items: center; }
+.experience-meta span, .experience-bottom { color: var(--muted); font-size: 12px; }
+.report-control button { border: 0; background: transparent; color: var(--accent); padding: 3px; }
+.report-control select { margin: 0 8px; }
+.admin-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin-bottom: 20px; }
+.admin-stats .panel { display: grid; gap: 6px; padding: 18px; }
+.admin-stats strong { font-size: 25px; }
+.admin-page > .panel { margin-top: 20px; }
+.admin-review { border-top: 1px solid var(--line); padding: 16px 0; }
+.admin-review small { display: block; color: var(--muted); margin-top: 5px; }
+.admin-review p { white-space: pre-wrap; margin: 12px 0; }
+.admin-review form { display: flex; gap: 8px; }
+.admin-review button { border: 1px solid var(--line); background: #fff; border-radius: 5px; padding: 8px 12px; }
+.coverage-list { max-height: 500px; overflow: auto; }
+.coverage-list > div { display: flex; justify-content: space-between; gap: 20px; border-top: 1px solid var(--line); padding: 8px 0; }
+.coverage-list span { color: var(--muted); white-space: nowrap; }
+.discussions { margin-bottom: 20px; }
+.discussions small { color: var(--muted); margin-left: 8px; }
+.admin-link-form { display: grid; gap: 12px; max-width: 700px; }
+.admin-link-form label { display: grid; gap: 5px; font-weight: 700; }
+.admin-link-form input { border: 1px solid var(--line); border-radius: 5px; padding: 10px; }
+.admin-link-form button { justify-self: start; border: 0; background: var(--accent); color: white; padding: 10px 16px; border-radius: 5px; }
+.verification-preview { max-width: 780px; }
+.verification-preview label { display: block; font-weight: 700; margin-bottom: 8px; }
+.verification-preview textarea { display: block; width: 100%; border: 1px solid var(--line); border-radius: 5px; padding: 12px; font: inherit; }
+.verification-preview button { border: 1px solid var(--line); border-radius: 5px; background: white; padding: 8px 12px; margin: 12px 0; }
+@media (max-width: 700px) {
+  .contribute-notes, .quick-metrics { grid-template-columns: 1fr 1fr; }
+  .profile-overview { align-items: start; flex-direction: column; }
+  .scale { gap: 8px; }
+  .scale .rating-options { order: 2; width: 100%; }
+}
+@media (max-width: 480px) { .contribute-notes { grid-template-columns: 1fr; } }

@@ -9,9 +9,12 @@
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
     "test": "node --test tests/*.test.cjs",
-    "import:ffcs": "node scripts/import-ffcs-inator.cjs"
+    "import:ffcs": "node scripts/import-ffcs-inator.cjs",
+    "seed:supabase": "node scripts/build-supabase-seed.cjs"
   },
   "dependencies": {
+    "@supabase/ssr": "^0.12.7",
+    "@supabase/supabase-js": "^2.117.3",
     "next": "16.3.8",
     "react": "latest",
     "react-dom": "latest"

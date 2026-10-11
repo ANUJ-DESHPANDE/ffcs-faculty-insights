@@ -26,15 +26,15 @@ export default function Home() {
       </section>
       <section className="stats-band">
         <div>
-          <strong>{courses.length - 1}</strong>
+          <strong>{courses.length}</strong>
           <span>courses in archive</span>
         </div>
         <div>
-          <strong>{faculty.length - 3}</strong>
+          <strong>{faculty.length}</strong>
           <span>faculty in archive</span>
         </div>
         <div>
-          <strong>{offerings.length - 3}</strong>
+          <strong>{offerings.length}</strong>
           <span>historical offerings</span>
         </div>
         <p>
@@ -81,25 +81,24 @@ export default function Home() {
       </section>
       <section className="demo-feature">
         <div>
-          <span className="eyebrow">TRY THE INTERACTION</span>
-          <h2>See the decision flow in action.</h2>
+          <span className="eyebrow">SHARE YOUR EXPERIENCE</span>
+          <h2>Help someone make a better choice.</h2>
           <p>
-            We have a separate fictional demo course with simulated ratings. Try
-            filtering, saving, and comparing without mistaking examples for real
-            student feedback.
+            Studied under a faculty member here? Give a quick overall rating and,
+            if you like, a sentence about teaching, grading, workload or labs.
           </p>
-          <Link className="primary-link" href="/courses/DEMO302L">
-            Open product demo ↗
+          <Link className="primary-link" href="/contribute">
+            Write a review ↗
           </Link>
         </div>
         <div className="demo-preview">
-          <span>PRODUCT DEMO · FICTIONAL</span>
-          <h3>Database Systems</h3>
+          <span>YOUR EXPERIENCE · ANONYMOUS TO READERS</span>
+          <h3>What should the next student know?</h3>
           <div>
-            <b>D1 + TD1</b>
-            <b>D2 + TD2</b>
+            <b>Quick rating</b>
+            <b>Optional note</b>
           </div>
-          <p>3 example faculty · compare reputation and sample sizes</p>
+          <p>Your review is saved privately and published after moderation.</p>
         </div>
       </section>
       <section className="home-section community">

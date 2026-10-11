@@ -4,12 +4,13 @@ import { useEffect, useState } from "react";
 import {
   facultyById,
   offeringsForFaculty,
-  reputation,
   scoreLabel,
 } from "@/lib/catalog";
+import { useReputations } from './reputation-provider';
 import { getShortlist, ShortlistButton } from "./shortlist-button";
 
 export function ShortlistView() {
+  const reputation = useReputations();
   const [ids, setIds] = useState<string[]>([]);
   useEffect(() => {
     const sync = () => setIds(getShortlist());
@@ -50,16 +51,14 @@ export function ShortlistView() {
                 <article className="shortlist-item" key={item.id}>
                   <div>
                     <span className="eyebrow">
-                      {item.demo
-                        ? "PRODUCT DEMO"
-                        : `${courseCodes.length} KNOWN COURSES`}
+                      {courseCodes.length} KNOWN COURSES
                     </span>
                     <h2>
                       <Link href={`/faculty/${item.id}`}>{item.name}</Link>
                     </h2>
                     <p>
                       {rep.count
-                        ? `${scoreLabel(rep.overall)} overall · ${rep.count} simulated ratings`
+                        ? `${scoreLabel(rep.overall)} overall · ${rep.count} published ratings`
                         : "No ratings yet"}
                     </p>
                     <small>

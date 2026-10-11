@@ -1,11 +1,11 @@
 import Link from "next/link";
 import {
-  reputation,
   scoreLabel,
   type Faculty,
   type Offering,
 } from "@/lib/catalog";
 import { ShortlistButton } from "./shortlist-button";
+import { useReputation } from './reputation-provider';
 
 export function FacultyCard({
   item,
@@ -14,13 +14,13 @@ export function FacultyCard({
   item: Faculty;
   offering?: Offering;
 }) {
-  const rep = reputation(item.id);
+  const rep = useReputation(item.id);
   return (
     <article className="faculty-card">
       <div className="faculty-card-main">
         <div>
           <div className="eyebrow">
-            {item.demo ? "SIMULATED PROFILE" : "FACULTY"}
+            FACULTY
           </div>
           <h3>
             <Link href={`/faculty/${item.id}`}>{item.name}</Link>
@@ -56,8 +56,8 @@ export function FacultyCard({
           <span>Grading ↑</span>
         </div>
         <div>
-          <strong>{scoreLabel(rep.attendance)}</strong>
-          <span>Attendance ↑</span>
+          <strong>{scoreLabel(rep.labEase)}</strong>
+          <span>Lab ease ↑</span>
         </div>
         <div>
           <strong>{scoreLabel(rep.workload)}</strong>
@@ -66,9 +66,7 @@ export function FacultyCard({
       </div>
       <p className="evidence">
         {rep.confidence}
-        {item.demo
-          ? " · simulated ratings"
-          : " · no student ratings collected yet"}
+        {rep.count ? ` · ${rep.count} published ratings` : ' · No published ratings yet'}
       </p>
     </article>
   );

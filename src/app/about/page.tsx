@@ -31,16 +31,14 @@ export default function About() {
           </a>{" "}
           public repository under its MIT license. The included snapshot is from
           its June 28, 2026 commit. It is historical. It does not establish
-          faculty availability for the next FFCS cycle. The separate product
-          demo uses fictional faculty and simulated ratings, visibly labeled
-          throughout.
+          faculty availability for the next FFCS cycle.
         </p>
         <h2>Trust before scores</h2>
         <p>
           One or two ratings should never look like settled reputation. We
           suppress the aggregate score until five ratings and show the number
-          behind every metric. Public reviews will be anonymous. Future
-          verification, if introduced, will still protect students’ identities.
+          behind every metric. Published reviews are anonymous. Email sign-in
+          and self-attestation do not verify enrollment.
         </p>
         <h2>Independent and careful</h2>
         <p>
@@ -50,6 +48,7 @@ export default function About() {
           grade curve to a particular class rather than making claims about a
           faculty member from one result.
         </p>
+        <p><Link className="text-link" href="/verification-lab">See the local VTOP verification research preview →</Link></p>
         <Link className="primary-link" href="/courses">
           Explore the archive ↗
         </Link>

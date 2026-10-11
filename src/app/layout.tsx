@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import "./globals.css";
+import { ReputationProvider } from '@/components/reputation-provider';
+import { AccountLink } from '@/components/account-link';
 
 export const metadata: Metadata = {
   title: {
@@ -39,14 +41,14 @@ export default function RootLayout({
               <Link href="/shortlist">Shortlist</Link>
               <Link href="/compare">Compare</Link>
               <Link href="/contribute">Contribute</Link>
+              <AccountLink />
             </nav>
           </header>
           <div className="demo-strip">
             Public offering archive: June 2026 source snapshot. Upcoming FFCS
-            availability is not confirmed. Ratings in the demo area are
-            simulated.
+            availability is not confirmed. Reviews appear only after moderation.
           </div>
-          {children}
+          <ReputationProvider>{children}</ReputationProvider>
           <footer>
             <div>
               <strong>Faculty Insights</strong>
@@ -54,6 +56,7 @@ export default function RootLayout({
             </div>
             <div>
               <Link href="/about">About & data sources</Link>
+              <Link href="/privacy">Privacy</Link>
               <a
                 href="https://ffcs.codechefvit.com"
                 target="_blank"
